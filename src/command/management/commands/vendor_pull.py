@@ -20,11 +20,11 @@ class Command(BaseCommand):
         completed = []
         for name, url in VENDOR_STATICFILES.items():
             out_path = STATICFILES_VENDOR_DIR / name
-            dl_success = helper.download_to_local(url, out_path, )
+            dl_success = helper.download_to_local(url, out_path)
             if dl_success:
                 completed.append(url)
             else:
-                self.stdout.write(f"Failed to download {url}")
+                self.stdout.write(self.style.ERROR(f"Failed to download {url}"))
         if set(completed) == set(VENDOR_STATICFILES.values()):
             self.stdout.write(self.style.SUCCESS("Successfully updated all vendor files"))
         else:
