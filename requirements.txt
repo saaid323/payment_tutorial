@@ -1,2 +1,5 @@
 Django
 gunicorn
+python-decouple
+dj-database-url
+requests
