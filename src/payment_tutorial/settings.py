@@ -52,12 +52,14 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 ]
 
 ROOT_URLCONF = "payment_tutorial.urls"
@@ -98,7 +100,7 @@ if DATABASE_URL is not None:
     DATABASES = {
         "default": dj_database_url.config(
             default=DATABASE_URL,
-            conn_max_age=30,
+            conn_max_age=300,
             conn_health_checks=True,
             )
         }
@@ -146,6 +148,12 @@ STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / "vendors"
 STATICFILES_DIRS = [STATICFILES_BASE_DIR]
 
 STATIC_ROOT = BASE_DIR.parent / 'local-cdn'
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
